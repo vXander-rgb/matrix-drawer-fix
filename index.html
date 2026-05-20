@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Matrix</title>
+
+<style>
+body{
+  background:#111;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,25px);
+  gap:4px;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.pixel{
+  width:25px;
+  height:25px;
+  background:#333;
+  cursor:pointer;
+}
+
+.on{ background:lime; }
+
+button{
+  margin-top:20px;
+  padding:15px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>GLOBAL MATRIX</h1>
+
+<div class="grid" id="grid"></div>
+
+<button onclick="send()">SEND</button>
+
+<script>
+
+const API = "https://script.google.com/macros/s/AKfycbxCrSuoPqr1OlYxqzLiKZB3dn4--_lSpAPSpH2hdOXXfIPD5N6jqkQxU0-RuewP_Pro/exec";
+
+const grid = document.getElementById("grid");
+
+let pixels = [];
+
+for(let i=0;i<96;i++){
+
+  let d=document.createElement("div");
+  d.className="pixel";
+  d.dataset.state="0";
+
+  d.onclick=()=>{
+
+    if(d.dataset.state==="0"){
+      d.dataset.state="1";
+      d.classList.add("on");
+    } else {
+      d.dataset.state="0";
+      d.classList.remove("on");
+    }
+
+  };
+
+  grid.appendChild(d);
+  pixels.push(d);
+}
+
+function send(){
+
+  let data="";
+
+  pixels.forEach(p=>{
+    data += p.dataset.state;
+  });
+
+  fetch(API + "?data=" + data);
+
+  alert("Sent safely!");
+}
+
+</script>
+
+</body>
+</html>
