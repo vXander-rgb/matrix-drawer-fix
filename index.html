@@ -75,15 +75,17 @@ for(let i=0;i<96;i++){
 
 function send(){
 
-  let data="";
+  let data = "";
 
-  pixels.forEach(p=>{
+  pixels.forEach(p => {
     data += p.dataset.state;
   });
 
+  console.log("DATA SENT:", data);
+
   fetch(API + "?data=" + data);
 
-  alert("Sent safely!");
+  alert("Sent! If im live check the stream!!!");
 }
 
 </script>
